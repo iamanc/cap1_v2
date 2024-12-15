@@ -1,0 +1,8 @@
+
+Tránh bị xung đột với windows
+- systemctl stop nginx
+-systemctl stop mysql
+
+- Nạp dữ liệu chạy file script SQL trên xampp vào databse noob
+
+Homer : donuts1
